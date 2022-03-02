@@ -21,6 +21,7 @@ import mergeDeep, { propertyIsUnsafe } from './utils/merge-deep';
 import setDeep from './utils/set-deep';
 import getDeep, { getSubObject } from './utils/get-deep';
 import { objectToArray, arrayToObject } from './utils/array-object';
+import { dependentKeyCompat } from '@ember/object/compat';
 
 import {
   Changes,
@@ -259,6 +260,7 @@ export class BufferedChangeset implements IChangeset {
    * @property isValid
    * @type {Array}
    */
+  @dependentKeyCompat
   get isValid() {
     return getKeyErrorValues(this[ERRORS]).length === 0;
   }
@@ -266,6 +268,7 @@ export class BufferedChangeset implements IChangeset {
    * @property isPristine
    * @type {Boolean}
    */
+  @dependentKeyCompat
   get isPristine() {
     let validationKeys = Object.keys(this[CHANGES]);
     const userChangesetKeys: string[] | undefined = this[OPTIONS].changesetKeys;
@@ -283,6 +286,7 @@ export class BufferedChangeset implements IChangeset {
    * @property isInvalid
    * @type {Boolean}
    */
+  @dependentKeyCompat
   get isInvalid() {
     return !this.isValid;
   }
@@ -290,6 +294,7 @@ export class BufferedChangeset implements IChangeset {
    * @property isDirty
    * @type {Boolean}
    */
+  @dependentKeyCompat
   get isDirty() {
     return !this.isPristine;
   }
